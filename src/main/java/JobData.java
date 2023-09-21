@@ -50,6 +50,7 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
+
         return allJobs;
     }
 
@@ -75,7 +76,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toUpperCase().contains(value.toUpperCase())) {
                 jobs.add(row);
             }
         }
@@ -95,7 +96,22 @@ public class JobData {
         loadData();
 
         // TODO - implement this method
-        return null;
+        ArrayList<HashMap<String, String>> searchResults = new ArrayList<>();
+
+        for (HashMap<String, String> job : allJobs) {
+            for (String key : job.keySet()) {
+                String fieldValue = job.get(key);
+
+                // Check if the field value contains the search term (case-insensitive)
+                if (fieldValue != null && fieldValue.toUpperCase().contains(value.toUpperCase())) {
+                    searchResults.add(job);
+                    break; // Add the job once and move to the next job
+                }
+            }
+        }
+
+        return searchResults;
+       // return null;
     }
 
     /**
